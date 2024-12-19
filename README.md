@@ -1,16 +1,30 @@
-# usay
+# USay
 
-A new real time chatting Flutter project.
+- A realtime cross-platform Chatting Application for Ethos 24.
+- Built with Flutter and Firebase.
 
-## Getting Started
+## ✨ Features:
 
-This project is a starting point for a Flutter application.
+- Display only known users or contacts.
+- Real-time messaging (with Firebase).
+- Login with Email Id and password.
+- Google Sign-In (no account or mobile number needed).
+- Add users by email ID.
+- Simple user profiles (with photo, about, last-seen, created-at).
+- Message read status.
+- Message delete & edit features.
+- Message notifications (push notifications).
+- Sleek UI with new Material Widgets.
+- **And much more...**
 
-A few resources to get you started if this is your first Flutter project:
+---
+# Ethos24
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Coding Club IITG brings to you Ethos 2024 , the largest hackathon in North East India!
+- This Project is part of challenge by Saptang Labs under the Ethos programme
+-  Our task is to develop a cutting-edge secure communications app
+   that ensures privacy and security for messaging, voice, and video communications. 
+   This app must seamlessly function across desktop, Android, and iOS platforms 
+   while integrating advanced encryption and security features, 
+   such as message expiration, secure file sharing,and multi-factor authentication (MFA).
+   This challenge is designed to push the boundaries of cross-platform secure communications.
