@@ -20,7 +20,6 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
-  List <ChatUser> list = [];
   // TabController _tabController;
   MotionTabBarController? _motionTabBarController;
   final _key = GlobalKey<ScaffoldState>();
@@ -28,6 +27,7 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    APIs.getSelfInfo();
     _motionTabBarController = MotionTabBarController(
       initialIndex: 0,
       length: 4,
@@ -75,8 +75,7 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             color: Colors.cyanAccent,
           ),
           leading: IconButton(
-            onPressed: ()
-            {
+            onPressed: () {
               // if (!Platform.isAndroid && !Platform.isIOS) {
               //   _controller.setExtended(true);
               // }

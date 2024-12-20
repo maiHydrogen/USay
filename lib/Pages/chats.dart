@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:usay/Components/chatusercard.dart';
 import 'package:usay/api/api.dart';
 import 'package:usay/models/chatuser.dart';
@@ -78,54 +76,78 @@ class MyChatsState extends State<MyChats> {
               child: Column(
                 children: [
                   StreamBuilder(
-                      //stream: APIs.getMyUsersId(),
+                      stream: APIs.getMyUsersId(),
 
-                      //get id of only known users
-
-                      stream: APIs.firestore.collection('users').snapshots(),
-
-                      //get only those user, who's ids are provided
+                      //get id of only known user
                       builder: (context, snapshot) {
                         switch (snapshot.connectionState) {
-                        //if data is loading
+                          //if data is loading
                           case ConnectionState.waiting:
                           case ConnectionState.none:
-                          // return const Center(
-                          //     child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
 
                           //if some or all data is loaded then show it
                           case ConnectionState.active:
                           case ConnectionState.done:
-                            final data = snapshot.data?.docs;
-                            list = data
-                                    ?.map((e) => ChatUser.fromJson(e.data()))
-                                    .toList() ??
-                                [];
+                            return StreamBuilder(
+                                //get only those user, who's ids are provided
+                                stream: APIs.getAllUsers(snapshot.data?.docs
+                                        .map((e) => e.id)
+                                        .toList() ??
+                                    []),
+                                builder: (context, snapshot) {
+                                  switch (snapshot.connectionState) {
+                                    //if data is loading
+                                    case ConnectionState.waiting:
+                                    case ConnectionState.none:
+                                    // return const Center(
+                                    //     child: CircularProgressIndicator());
 
-                            if (list.isNotEmpty) {
-                              return ListView.builder(
-                                itemCount: list.length,
-                                padding: EdgeInsetsDirectional.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.01),
-                                shrinkWrap: true,
-                                physics: const BouncingScrollPhysics(),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Chatusercard(user: list[index]);
-                                  //return Text('Name: ${list[index]}');
-                                },
-                              );
-                            } else {
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.38,
-                                ),
-                                child: const Text('No Chats Found!',
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.cyan)),
-                              );
-                            }
+                                    //if some or all data is loaded then show it
+                                    case ConnectionState.active:
+                                    case ConnectionState.done:
+                                      final data = snapshot.data?.docs;
+                                      list = data
+                                              ?.map((e) =>
+                                                  ChatUser.fromJson(e.data()))
+                                              .toList() ??
+                                          [];
+
+                                      if (list.isNotEmpty) {
+                                        return ListView.builder(
+                                          itemCount: list.length,
+                                          padding: EdgeInsetsDirectional.only(
+                                              top: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.01),
+                                          shrinkWrap: true,
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Chatusercard(
+                                                user: list[index]);
+                                            //return Text('Name: ${list[index]}');
+                                          },
+                                        );
+                                      } else {
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.38,
+                                          ),
+                                          child: const Text('No Chats Found!',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.cyan)),
+                                        );
+                                      }
+                                  }
+                                });
                         }
                       }),
                 ],

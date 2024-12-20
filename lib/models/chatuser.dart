@@ -10,26 +10,26 @@ class ChatUser {
     required this.About,
     required this.Name,
   });
-  late final String createdAt;
-  late final String lastActive;
-  late final bool isOnline;
-  late final String id;
-  late final String Image;
-  late final String pushToken;
-  late final String email;
-  late final String About;
-  late final String Name;
+  late  String createdAt;
+  late  String lastActive;
+  late  bool isOnline;
+  late  String id;
+  late  String Image;
+  late  String pushToken;
+  late  String email;
+  late  String About;
+  late  String Name;
 
   ChatUser.fromJson(Map<String, dynamic> json){
-    createdAt = json['createdAt'];
-    lastActive = json['lastActive'];
-    isOnline = json['isOnline'];
-    id = json['id'];
-    Image = json['Image'];
-    pushToken = json['pushToken'];
-    email = json['email'];
-    About = json['About'];
-    Name = json['Name'];
+    createdAt = json['createdAt'] ??'';
+    lastActive = json['lastActive'] ??'';
+    isOnline = json['isOnline'] ??'';
+    id = json['id'] ??'';
+    Image = json['Image'] ??'';
+    pushToken = json['pushToken'] ??'';
+    email = json['email'] ??'';
+    About = json['About'] ??'';
+    Name = json['Name'] ??'';
   }
 
   Map<String, dynamic> toJson() {
