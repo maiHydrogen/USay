@@ -62,15 +62,12 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           toolbarHeight: 52,
-          title: const Padding(
-            padding: EdgeInsets.only(top: 8),
-            child: Text(
-              'usay',
+          title: const Text(
+              'Usay',
             ),
-          ),
           titleTextStyle: const TextStyle(
             fontFamily: 'GreatVibes',
-            fontSize: 28,
+            fontSize: 32,
             fontWeight: FontWeight.w500,
             color: Colors.cyanAccent,
           ),
@@ -88,18 +85,21 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             ),
           ),
           actions: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                    color: Colors.cyanAccent, style: BorderStyle.solid),
-              ),
-              child: IconButton(
-                onPressed: () => _key.currentState?.openEndDrawer(),
-                icon: const Icon(
-                  FontAwesomeIcons.bell,
-                  color: Colors.cyanAccent,
-                  size: 20,
+            Padding(
+              padding: const EdgeInsets.only(right:15.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                      color: Colors.cyanAccent, style: BorderStyle.solid),
+                ),
+                child: IconButton(
+                  onPressed: () => _key.currentState?.openEndDrawer(),
+                  icon: const Icon(
+                    FontAwesomeIcons.bell,
+                    color: Colors.cyanAccent,
+                    size: 20,
+                  ),
                 ),
               ),
             ),
