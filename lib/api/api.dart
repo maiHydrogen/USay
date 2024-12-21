@@ -88,7 +88,7 @@ class APIs {
     await firestore
         .collection('users')
         .doc(user.uid)
-        .update({'Name': me.Name, 'About': me.About});
+        .update({'Name': me.Name, 'About': me.About , 'Image': me.Image});
   }
 }
 

@@ -47,6 +47,8 @@ dependencies:
   firebase_messaging: ^14.7.19
   fluttertoast: ^8.2.5
   shared_preferences: ^2.2.3
+  image_picker: ^1.0.8
+  image_picker_android: ^0.8.9+6
 
 
 

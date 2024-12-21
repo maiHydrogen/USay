@@ -85,7 +85,8 @@ class WelcomepageState extends State<Welcomepage> {
   void moveToNext() async {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent));
     var sharedPref = await SharedPreferences.getInstance();
     var isLoggedIn = sharedPref.getBool(keylogin);
 
