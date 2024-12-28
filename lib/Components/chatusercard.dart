@@ -1,3 +1,4 @@
+import 'package:usay/Pages/chatscreen.dart';
 import 'package:usay/models/chatuser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,14 @@ class _ChatusercardState extends State<Chatusercard> {
         margin: EdgeInsets.symmetric(
             vertical: 4, horizontal: MediaQuery.of(context).size.width * 0.04),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatScreen(user: widget.user,),
+              ),
+            );
+          },
           child: ListTile(
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.1),

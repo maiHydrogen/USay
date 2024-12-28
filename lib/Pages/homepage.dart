@@ -61,7 +61,7 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          toolbarHeight: 52,
+          toolbarHeight: MediaQuery.of(context).size.height*0.07,
           title: const Text(
               'Usay',
             ),
