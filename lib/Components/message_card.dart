@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:usay/Components/date&time.dart';
 import 'package:usay/api/api.dart';
 import 'package:usay/models/messages.dart';
 
@@ -24,6 +27,10 @@ class _MessageCardState extends State<MessageCard> {
   // sender or another user message
   Widget _blueMessage() {
     final mq = MediaQuery.of(context).size;
+    if (widget.message.read.isEmpty) {
+      APIs.updateMessageReadStatus(widget.message);
+      log('Date time updated');
+    }
 
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       //message content
@@ -50,7 +57,10 @@ class _MessageCardState extends State<MessageCard> {
       //message time
       Padding(
         padding: EdgeInsets.only(right: mq.width * 0.4),
-        child: Text(widget.message.sent),
+        child: Text(
+            MyDateTime.getFormattedTime(context: context, time: widget.message.sent),
+            style: const TextStyle(fontSize: 15, color: Colors.white)
+        ),
       )
     ]);
   }
@@ -64,7 +74,10 @@ class _MessageCardState extends State<MessageCard> {
       //message time
       Padding(
         padding: EdgeInsets.only(right: mq.width * 0.4),
-        child: Text('${widget.message.read}12:00 AM'),
+        child: Text(
+          MyDateTime.getFormattedTime(context: context, time: widget.message.sent),
+            style: const TextStyle(fontSize: 15, color: Colors.white)
+        ),
       ),
       //message content
       Flexible(
