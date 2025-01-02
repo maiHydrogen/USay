@@ -29,7 +29,6 @@ class _MessageCardState extends State<MessageCard> {
     final mq = MediaQuery.of(context).size;
     if (widget.message.read.isEmpty) {
       APIs.updateMessageReadStatus(widget.message);
-      log('Date time updated');
     }
 
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -69,7 +68,9 @@ class _MessageCardState extends State<MessageCard> {
   Widget _greenMessage() {
     final mq = MediaQuery.of(context).size;
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      const Icon(FontAwesomeIcons.checkDouble),
+      if (widget.message.read.isNotEmpty)
+        const Icon(FontAwesomeIcons.checkDouble, color: Colors.blue, size: 20),
+
       const SizedBox(width: 2,),
       //message time
       Padding(

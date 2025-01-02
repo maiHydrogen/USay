@@ -8,6 +8,24 @@ class MyDateTime {
     final date = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
     return TimeOfDay.fromDateTime(date).format(context);
   }
+  //get last message time (used in chat user card)
+  static String getLastMessageTime(
+      {required BuildContext context,
+        required String time,
+        bool showYear = false}) {
+    final DateTime sent = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
+    final DateTime now = DateTime.now();
+
+    if (now.day == sent.day &&
+        now.month == sent.month &&
+        now.year == sent.year) {
+      return TimeOfDay.fromDateTime(sent).format(context);
+    }
+
+    return showYear
+        ? '${sent.day} ${_getMonth(sent)} ${sent.year}'
+        : '${sent.day} ${_getMonth(sent)}';
+  }
 
   // // for getting formatted time for sent & read
   // static String getMessageTime(
@@ -49,24 +67,6 @@ class MyDateTime {
     return '$formattedTime - $formattedDate';
   }
 
-  //get last message time (used in chat user card)
-  static String getLastMessageTime(
-      {required BuildContext context,
-        required String time,
-        bool showYear = false}) {
-    final DateTime sent = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
-    final DateTime now = DateTime.now();
-
-    if (now.day == sent.day &&
-        now.month == sent.month &&
-        now.year == sent.year) {
-      return TimeOfDay.fromDateTime(sent).format(context);
-    }
-
-    return showYear
-        ? '${sent.day} ${_getMonth(sent)} ${sent.year}'
-        : '${sent.day} ${_getMonth(sent)}';
-  }
 
   //get formatted last active time of user in chat screen
   static String getLastActiveTime(
@@ -93,7 +93,7 @@ class MyDateTime {
     String month = _getMonth(time);
 
     return 'Last seen on ${time.day} $month on $formattedTime';
-  }
+  }*/
 
   // get month name from month no. or index
   static String _getMonth(DateTime date) {
@@ -124,5 +124,5 @@ class MyDateTime {
         return 'Dec';
     }
     return 'NA';
-  }*/
+  }
 }

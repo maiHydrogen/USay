@@ -1,9 +1,12 @@
+import 'package:usay/Components/date&time.dart';
 import 'package:usay/Pages/chatscreen.dart';
+import 'package:usay/api/api.dart';
 import 'package:usay/models/chatuser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:usay/models/messages.dart';
 
 class Chatusercard extends StatefulWidget {
   final ChatUser user;
@@ -14,6 +17,7 @@ class Chatusercard extends StatefulWidget {
 }
 
 class _ChatusercardState extends State<Chatusercard> {
+  Message? _message;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -31,37 +35,61 @@ class _ChatusercardState extends State<Chatusercard> {
               ),
             );
           },
-          child: ListTile(
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.1),
-              child: CachedNetworkImage(fit: BoxFit.cover,
-               width: MediaQuery.of(context).size.width * 0.12,
-                height: MediaQuery.of(context).size.width * 0.12,
-                imageUrl: widget.user.Image,
-                errorWidget: (context, url, error) => Icon(
-                  FontAwesomeIcons.circleUser,
-                  color: Colors.cyanAccent,
-                  size: MediaQuery.of(context).size.width * 0.1,
+          child: StreamBuilder(
+            stream: APIs.getLastMessage(widget.user),
+            builder: (context, snapshot) {
+              final data = snapshot.data?.docs;
+              final list =
+                  data?.map((e) => Message.fromJson(e.data())).toList() ?? [];
+              if (list.isNotEmpty) _message = list[0];
+              return ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.1),
+                  child: CachedNetworkImage(fit: BoxFit.cover,
+                   width: MediaQuery.of(context).size.width * 0.12,
+                    height: MediaQuery.of(context).size.width * 0.12,
+                    imageUrl: widget.user.Image,
+                    errorWidget: (context, url, error) => Icon(
+                      FontAwesomeIcons.circleUser,
+                      color: Colors.cyanAccent,
+                      size: MediaQuery.of(context).size.width * 0.1,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            title: Text(
-              widget.user.Name,
-              style: const TextStyle(color: Colors.white),
-            ),
-            subtitle: Text(
-              widget.user.About,
-              style: const TextStyle(color: Colors.white),
-            ),
-            trailing: Container(
-              width: 15,
-              height: 15,
-              decoration: BoxDecoration(
-                  color: Colors.cyanAccent,
-                  borderRadius: BorderRadius.circular(10)),
-            ),
-            //trailing: const Text('12:00 AM',
-            //style: TextStyle(color: Colors.white),),
+                title: Text(
+                  widget.user.Name,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                subtitle:Text(
+                    _message != null
+                        ? _message!.type == Type.image
+                        ? 'image'
+                        : _message!.msg
+                        : widget.user.About,
+                    maxLines: 1),
+                trailing:
+                _message == null
+                ? null //show nothing when no message is sent
+                    : _message!.read.isEmpty &&
+              _message!.fromId != APIs.user.uid
+              ?
+                Container(
+                  width: 15,
+                  height: 15,
+                  decoration: BoxDecoration(
+                      color: Colors.cyanAccent,
+                      borderRadius: BorderRadius.circular(10)),
+                ) :
+                //message sent time
+                Text(
+                  MyDateTime.getLastMessageTime(
+                      context: context, time: _message!.sent),
+                  style: const TextStyle(color: Colors.black54),
+                ),
+                //trailing: const Text('12:00 AM',
+                //style: TextStyle(color: Colors.white),),
+              );
+            }
           ),
         ));
   }
