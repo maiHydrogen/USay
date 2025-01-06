@@ -106,6 +106,7 @@ class APIs {
       ChatUser user) {
     return firestore
         .collection('Chats/${getConversationID(user.id)}/messages/')
+        .orderBy('sent', descending: true)
         .snapshots();
   }
 
@@ -132,6 +133,7 @@ class APIs {
         .doc(message.sent)
         .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
   }
+
   //get only last message of a specific chat
   static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessage(
       ChatUser user) {
@@ -141,6 +143,7 @@ class APIs {
         .limit(1)
         .snapshots();
   }
+
   //update message
   static Future<void> updateMessage(Message message, String updatedMsg) async {
     await firestore
@@ -148,7 +151,6 @@ class APIs {
         .doc(message.sent)
         .update({'msg': updatedMsg});
   }
-
 }
 
 class FirebaseAuthService {

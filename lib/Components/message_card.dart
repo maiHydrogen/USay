@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:usay/Components/date&time.dart';
@@ -35,10 +32,9 @@ class _MessageCardState extends State<MessageCard> {
       //message content
       Flexible(
         child: Container(
-          padding: EdgeInsets.all(
-              mq.width * .04),
+          padding: EdgeInsets.all(mq.width * .03),
           margin: EdgeInsets.symmetric(
-              horizontal: mq.width * .04, vertical: mq.height * .01),
+              horizontal: mq.width * .03, vertical: mq.height * .01),
           decoration: BoxDecoration(
               color: const Color.fromARGB(255, 221, 245, 255),
               border: Border.all(color: Colors.lightBlue),
@@ -57,9 +53,9 @@ class _MessageCardState extends State<MessageCard> {
       Padding(
         padding: EdgeInsets.only(right: mq.width * 0.4),
         child: Text(
-            MyDateTime.getFormattedTime(context: context, time: widget.message.sent),
-            style: const TextStyle(fontSize: 15, color: Colors.white)
-        ),
+            MyDateTime.getFormattedTime(
+                context: context, time: widget.message.sent),
+            style: const TextStyle(fontSize: 15, color: Colors.white)),
       )
     ]);
   }
@@ -71,23 +67,25 @@ class _MessageCardState extends State<MessageCard> {
       if (widget.message.read.isNotEmpty)
         const Icon(FontAwesomeIcons.checkDouble, color: Colors.blue, size: 20),
 
-      const SizedBox(width: 2,),
+      const SizedBox(
+        width: 2,
+      ),
       //message time
       Padding(
         padding: EdgeInsets.only(right: mq.width * 0.4),
         child: Text(
-          MyDateTime.getFormattedTime(context: context, time: widget.message.sent),
-            style: const TextStyle(fontSize: 15, color: Colors.white)
-        ),
+            MyDateTime.getFormattedTime(
+                context: context, time: widget.message.sent),
+            style: const TextStyle(fontSize: 15, color: Colors.white)),
       ),
       //message content
       Flexible(
         child: Container(
           padding: EdgeInsets.all(widget.message.type == Type.image
-              ? mq.width * .03
-              : mq.width * .04),
+              ? mq.width * .02
+              : mq.width * .03),
           margin: EdgeInsets.symmetric(
-              horizontal: mq.width * .04, vertical: mq.height * .01),
+              horizontal: mq.width * .03, vertical: mq.height * .01),
           decoration: BoxDecoration(
               color: const Color.fromARGB(255, 218, 255, 176),
               border: Border.all(color: Colors.lightGreen),

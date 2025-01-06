@@ -65,7 +65,7 @@ class MyDateTime {
         : '${sent.day} ${_getMonth(sent)} ${sent.year}';
 
     return '$formattedTime - $formattedDate';
-  }
+  }*/
 
 
   //get formatted last active time of user in chat screen
@@ -92,8 +92,8 @@ class MyDateTime {
 
     String month = _getMonth(time);
 
-    return 'Last seen on ${time.day} $month on $formattedTime';
-  }*/
+    return 'Last seen on ${time.day} $month';
+  }
 
   // get month name from month no. or index
   static String _getMonth(DateTime date) {

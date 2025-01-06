@@ -318,7 +318,6 @@ class _MyProfileState extends State<MyProfile> {
                         width: mq.height * 0.1,
                       ),
                     ),
-                    //Image.asset('Images/Gallery3.webp',fit: BoxFit.cover, height: mq.height*0.1,),
                   )
                 ],
               )

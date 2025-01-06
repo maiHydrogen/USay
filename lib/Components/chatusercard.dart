@@ -66,7 +66,8 @@ class _ChatusercardState extends State<Chatusercard> {
                         ? 'image'
                         : _message!.msg
                         : widget.user.About,
-                    maxLines: 1),
+                    maxLines: 1,
+                style: const TextStyle(color: Colors.white),),
                 trailing:
                 _message == null
                 ? null //show nothing when no message is sent
