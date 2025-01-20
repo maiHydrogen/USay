@@ -1,6 +1,4 @@
-
 import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -130,74 +128,91 @@ class ChatScreenState extends State<ChatScreen> {
 
   Widget _userBar() {
     final mq = MediaQuery.of(context).size;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(
-            FontAwesomeIcons.arrowLeft,
-            color: Colors.cyanAccent,
-            size: 20,
-          ),
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(mq.width * 0.1),
-          child: CachedNetworkImage(
-            fit: BoxFit.cover,
-            width: mq.width * 0.1,
-            height: mq.width * 0.1,
-            imageUrl: widget.user.Image,
-            errorWidget: (context, url, error) => Icon(
-              FontAwesomeIcons.circleUser,
-              color: Colors.cyanAccent,
-              size: mq.width * 0.1,
-            ),
-          ),
-        ),
-        SizedBox(
-          width: mq.width * 0.03,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.user.Name,
-              style: const TextStyle(
-                fontFamily: 'Solitreo',
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Colors.cyanAccent,
+    return InkWell(
+      child: StreamBuilder(
+        stream: APIs.getUserInfo(widget.user),
+        builder: (context, snapshot) {
+          final data = snapshot.data?.docs;
+          final list =
+              data?.map((e) => ChatUser.fromJson(e.data())).toList() ?? [];
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  FontAwesomeIcons.arrowLeft,
+                  color: Colors.cyanAccent,
+                  size: 20,
+                ),
               ),
-            ),
-            Text(
-              MyDateTime.getLastActiveTime(
-                  context: context, lastActive: widget.user.lastActive),
-              style: TextStyle(
-                fontFamily: 'Solitreo',
-                fontSize: mq.width * 0.03,
-                fontWeight: FontWeight.w500,
-                color: Colors.cyanAccent,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(mq.width * 0.1),
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  width: mq.width * 0.1,
+                  height: mq.width * 0.1,
+                  imageUrl: list.isNotEmpty ? list[0].Image : widget.user.Image,
+                  errorWidget: (context, url, error) => Icon(
+                    FontAwesomeIcons.circleUser,
+                    color: Colors.cyanAccent,
+                    size: mq.width * 0.1,
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(
-          width: mq.width * 0.3,
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(
-            FontAwesomeIcons.phone,
-            color: Colors.cyanAccent,
-            size: mq.width * 0.07,
-          ),
-        ),
-      ],
+              SizedBox(
+                width: mq.width * 0.03,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    list.isNotEmpty ? list[0].Name : widget.user.Name,
+                    style: const TextStyle(
+                      fontFamily: 'Solitreo',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.cyanAccent,
+                    ),
+                  ),
+                  Text(
+                    list.isNotEmpty
+                        ? list[0].isOnline
+                            ? 'Online'
+                            : MyDateTime.getLastActiveTime(
+                                context: context,
+                                lastActive: list[0].lastActive)
+                        : MyDateTime.getLastActiveTime(
+                            context: context,
+                            lastActive: widget.user.lastActive),
+                    style: TextStyle(
+                      fontFamily: 'Solitreo',
+                      fontSize: mq.width * 0.03,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.cyanAccent,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: mq.width * 0.3,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  FontAwesomeIcons.phone,
+                  color: Colors.cyanAccent,
+                  size: mq.width * 0.07,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -260,7 +275,9 @@ class ChatScreenState extends State<ChatScreen> {
                     final XFile? image =
                         await picker.pickImage(source: ImageSource.camera);
                     if (image != null) {
+                      setState(() => _isUploading = !_isUploading);
                       log('ImagePath: ${image.path}');
+                      setState(() => _isUploading = !_isUploading);
                     } else {
                       log('Nothing found');
                     }
@@ -283,12 +300,12 @@ class ChatScreenState extends State<ChatScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     final ImagePicker picker = ImagePicker();
-                    final XFile? image =
-                        await picker.pickImage(source: ImageSource.gallery);
-                    if (image != null) {
-                      log('ImagePath: ${image.path}');
-                    } else {
-                      log('Nothing found');
+                    final List<XFile> image =
+                        await picker.pickMultiImage(imageQuality: 80);
+                    for (var i in image) {
+                      setState(() => _isUploading = !_isUploading);
+                      log('ImagePath: ${i.path}');
+                      setState(() => _isUploading = !_isUploading);
                     }
                   },
                   style: ElevatedButton.styleFrom(

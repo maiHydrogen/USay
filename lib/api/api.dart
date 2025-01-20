@@ -91,6 +91,22 @@ class APIs {
         .doc(user.uid)
         .update({'Name': me.Name, 'About': me.About, 'Image': me.Image});
   }
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfo(
+      ChatUser chatUser) {
+    return firestore
+        .collection('users')
+        .where('id', isEqualTo: chatUser.id)
+        .snapshots();
+  }
+
+  // update online or last active status of user
+  static Future<void> updateActiveStatus(bool isOnline) async {
+   await firestore.collection('users').doc(user.uid).update({
+      'isOnline': isOnline,
+      'lastActive': DateTime.now().millisecondsSinceEpoch.toString(),
+      'pushToken': me.pushToken,
+    });
+  }
 
   ///************** Chat Screen Related APIs **************
 
