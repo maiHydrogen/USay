@@ -11,8 +11,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'package:usay/api/api.dart';
-
-import '../models/chatuser.dart';
 import 'notification.dart';
 
 class MyHome extends StatefulWidget {
@@ -36,7 +34,6 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
     //pause  -- inactive or offline
     SystemChannels.lifecycle.setMessageHandler((message) {
       log('Message: $message');
-
       if (APIs.auth.currentUser != null) {
         if (message.toString().contains('resume')) {
           APIs.updateActiveStatus(true);

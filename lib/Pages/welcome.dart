@@ -95,7 +95,6 @@ class WelcomepageState extends State<Welcomepage> {
       () {
         if (isLoggedIn != null) {
           if (APIs.auth.currentUser != null) {
-            log('\nUser: ${APIs.auth.currentUser}');
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const MyHome()),

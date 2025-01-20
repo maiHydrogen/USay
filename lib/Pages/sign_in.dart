@@ -191,6 +191,7 @@ class SignInState extends State<SignIn> {
                     var sharedPref = await SharedPreferences.getInstance();
                       sharedPref.setBool(WelcomepageState.keylogin, true);
                       var pref = await SharedPreferences.getInstance();
+                      //await APIs.updateActiveStatus(true);
                     },
                     style: const NeumorphicStyle(
                         depth: 2,

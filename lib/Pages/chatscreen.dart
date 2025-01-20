@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:usay/Components/date&time.dart';
 import 'package:usay/Components/message_card.dart';
+import 'package:usay/Pages/chat_profile.dart';
 import 'package:usay/api/api.dart';
 import 'package:usay/models/chatuser.dart';
 import 'package:usay/models/messages.dart';
@@ -129,6 +131,15 @@ class ChatScreenState extends State<ChatScreen> {
   Widget _userBar() {
     final mq = MediaQuery.of(context).size;
     return InkWell(
+      onTap: (){Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatProfile(
+            user: widget.user,
+          ),
+        ),
+      );
+      },
       child: StreamBuilder(
         stream: APIs.getUserInfo(widget.user),
         builder: (context, snapshot) {
@@ -144,7 +155,7 @@ class ChatScreenState extends State<ChatScreen> {
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(
-                  FontAwesomeIcons.arrowLeft,
+                  CupertinoIcons.back,
                   color: Colors.cyanAccent,
                   size: 20,
                 ),
@@ -191,7 +202,7 @@ class ChatScreenState extends State<ChatScreen> {
                             lastActive: widget.user.lastActive),
                     style: TextStyle(
                       fontFamily: 'Solitreo',
-                      fontSize: mq.width * 0.03,
+                      fontSize: mq.width * 0.025,
                       fontWeight: FontWeight.w500,
                       color: Colors.cyanAccent,
                     ),
@@ -204,7 +215,7 @@ class ChatScreenState extends State<ChatScreen> {
               IconButton(
                 onPressed: () {},
                 icon: Icon(
-                  FontAwesomeIcons.phone,
+                  CupertinoIcons.phone,
                   color: Colors.cyanAccent,
                   size: mq.width * 0.07,
                 ),

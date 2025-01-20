@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
@@ -51,11 +52,6 @@ class _MyProfileState extends State<MyProfile> {
             key: _formkey,
             child: SingleChildScrollView(
               child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                ),
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Padding(
@@ -216,10 +212,12 @@ class _MyProfileState extends State<MyProfile> {
                           var shacyanPref =
                               await SharedPreferences.getInstance();
                           shacyanPref.setBool(WelcomepageState.keylogin, false);
+                          await APIs.updateActiveStatus(false);
                           await APIs.auth.signOut().then(
                             (value) async {
                               await GoogleSignIn().signOut().then((value) {
                                 Navigator.pop(context);
+                                APIs.auth = FirebaseAuth.instance;
                                 // ignore: use_build_context_synchronously
                                 Navigator.pushReplacement(
                                   context,
