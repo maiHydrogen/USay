@@ -1,4 +1,5 @@
 import 'package:usay/Components/date&time.dart';
+import 'package:usay/Components/dialogs.dart';
 import 'package:usay/Pages/chatscreen.dart';
 import 'package:usay/api/api.dart';
 import 'package:usay/models/chatuser.dart';
@@ -46,18 +47,25 @@ class _ChatusercardState extends State<Chatusercard> {
                     data?.map((e) => Message.fromJson(e.data())).toList() ?? [];
                 if (list.isNotEmpty) _message = list[0];
                 return ListTile(
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                        MediaQuery.of(context).size.width * 0.1),
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width * 0.12,
-                      height: MediaQuery.of(context).size.width * 0.12,
-                      imageUrl: widget.user.Image,
-                      errorWidget: (context, url, error) => Icon(
-                        FontAwesomeIcons.circleUser,
-                        color: Colors.cyanAccent,
-                        size: MediaQuery.of(context).size.width * 0.1,
+                  leading: InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) => ProfileDialog(user: widget.user));
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          MediaQuery.of(context).size.width * 0.1),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width * 0.12,
+                        height: MediaQuery.of(context).size.width * 0.12,
+                        imageUrl: widget.user.Image,
+                        errorWidget: (context, url, error) => Icon(
+                          FontAwesomeIcons.circleUser,
+                          color: Colors.cyanAccent,
+                          size: MediaQuery.of(context).size.width * 0.1,
+                        ),
                       ),
                     ),
                   ),

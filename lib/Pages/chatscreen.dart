@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:usay/Components/date&time.dart';
+import 'package:usay/Components/dialogs.dart';
 import 'package:usay/Components/message_card.dart';
-import 'package:usay/Pages/chat_profile.dart';
 import 'package:usay/api/api.dart';
 import 'package:usay/models/chatuser.dart';
 import 'package:usay/models/messages.dart';
@@ -37,15 +37,9 @@ class ChatScreenState extends State<ChatScreen> {
     return SafeArea(
         child: Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment(0.8, 1),
-          colors: <Color>[
-            Color(0x00000000),
-            Color.fromARGB(255, 21, 135, 152),
-            Color(0x001D1639),
-          ], // Gradient from https://learnui.design/tools/gradient-generator.html
-          tileMode: TileMode.mirror,
+        image: DecorationImage(
+          image: AssetImage('Images/SplashBC.jpg'),
+          fit: BoxFit.fill,
         ),
       ),
       child: GestureDetector(
@@ -55,7 +49,19 @@ class ChatScreenState extends State<ChatScreen> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             automaticallyImplyLeading: false,
-            flexibleSpace: _userBar(),
+            flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                      Color.fromARGB(255, 31, 148, 160),
+                      Color.fromARGB(255, 35, 109, 193),
+                      Color.fromARGB(255, 140, 39, 198),
+                    ], // Gradient from https://learnui.design/tools/gradient-generator.html
+                  ),
+                ),
+                child: _userBar()),
             toolbarHeight: mq.height * 0.07,
             elevation: 10,
           ),
@@ -131,14 +137,15 @@ class ChatScreenState extends State<ChatScreen> {
   Widget _userBar() {
     final mq = MediaQuery.of(context).size;
     return InkWell(
-      onTap: (){Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatProfile(
-            user: widget.user,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatProfile(
+              user: widget.user,
+            ),
           ),
-        ),
-      );
+        );
       },
       child: StreamBuilder(
         stream: APIs.getUserInfo(widget.user),
@@ -229,137 +236,134 @@ class ChatScreenState extends State<ChatScreen> {
 
   Widget _userInput() {
     final mq = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            width: mq.width * 0.8,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(mq.width * 0.6),
-              border: Border.all(color: Colors.black45),
-            ),
-            child: Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    setState(() => _showEmoji = !_showEmoji);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(0),
-                    elevation: 10,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(mq.height * 0.1),
-                    child: Image.asset(
-                      'Images/emoji.jpg',
-                      fit: BoxFit.cover,
-                      height: mq.height * 0.04,
-                      width: mq.height * 0.04,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    onTap: () {
-                      if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'Text here...',
-                      border: InputBorder.none,
-                    ),
-                    autofocus: true,
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    final ImagePicker picker = ImagePicker();
-                    final XFile? image =
-                        await picker.pickImage(source: ImageSource.camera);
-                    if (image != null) {
-                      setState(() => _isUploading = !_isUploading);
-                      log('ImagePath: ${image.path}');
-                      setState(() => _isUploading = !_isUploading);
-                    } else {
-                      log('Nothing found');
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    elevation: 10,
-                    padding: const EdgeInsets.all(0),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(mq.height * 0.1),
-                    child: Image.asset(
-                      'Images/camera5.webp',
-                      fit: BoxFit.cover,
-                      height: mq.height * 0.04,
-                      width: mq.height * 0.04,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    final ImagePicker picker = ImagePicker();
-                    final List<XFile> image =
-                        await picker.pickMultiImage(imageQuality: 80);
-                    for (var i in image) {
-                      setState(() => _isUploading = !_isUploading);
-                      log('ImagePath: ${i.path}');
-                      setState(() => _isUploading = !_isUploading);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    elevation: 10,
-                    padding: const EdgeInsets.all(0),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(mq.height * 0.1),
-                    child: Image.asset(
-                      'Images/Gallery3.webp',
-                      fit: BoxFit.cover,
-                      height: mq.height * 0.04,
-                      width: mq.height * 0.04,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Container(
+          width: mq.width * 0.8,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(mq.width * 0.6),
+            border: Border.all(color: Colors.black45),
           ),
-          ElevatedButton(
-              onPressed: () {
-                if (_textController.text.isNotEmpty) {
-                  APIs.sendMessage(widget.user, _textController.text);
-                  _textController.text = '';
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                shape: const CircleBorder(),
-                elevation: 10,
-                padding: const EdgeInsets.all(0),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(mq.height * 0.07),
-                child: Image.asset(
-                  'Images/send.webp',
-                  fit: BoxFit.cover,
-                  height: mq.height * 0.07,
-                  width: mq.height * 0.07,
+          child: Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  setState(() => _showEmoji = !_showEmoji);
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(0),
+                  elevation: 10,
                 ),
-              )),
-        ],
-      ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(mq.height * 0.1),
+                  child: Image.asset(
+                    'Images/emoji.jpg',
+                    fit: BoxFit.cover,
+                    height: mq.height * 0.04,
+                    width: mq.height * 0.04,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: _textController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  onTap: () {
+                    if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Text here...',
+                    border: InputBorder.none,
+                  ),
+                  autofocus: true,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final ImagePicker picker = ImagePicker();
+                  final XFile? image =
+                      await picker.pickImage(source: ImageSource.camera);
+                  if (image != null) {
+                    setState(() => _isUploading = !_isUploading);
+                    log('ImagePath: ${image.path}');
+                    setState(() => _isUploading = !_isUploading);
+                  } else {
+                    log('Nothing found');
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  elevation: 10,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(mq.height * 0.1),
+                  child: Image.asset(
+                    'Images/camera5.webp',
+                    fit: BoxFit.cover,
+                    height: mq.height * 0.04,
+                    width: mq.height * 0.04,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final ImagePicker picker = ImagePicker();
+                  final List<XFile> image =
+                      await picker.pickMultiImage(imageQuality: 80);
+                  for (var i in image) {
+                    setState(() => _isUploading = !_isUploading);
+                    log('ImagePath: ${i.path}');
+                    setState(() => _isUploading = !_isUploading);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  elevation: 10,
+                  padding: const EdgeInsets.all(0),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(mq.height * 0.1),
+                  child: Image.asset(
+                    'Images/Gallery3.webp',
+                    fit: BoxFit.cover,
+                    height: mq.height * 0.04,
+                    width: mq.height * 0.04,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        ElevatedButton(
+            onPressed: () {
+              if (_textController.text.isNotEmpty) {
+                APIs.sendMessage(widget.user, _textController.text);
+                _textController.text = '';
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              elevation: 10,
+              padding: const EdgeInsets.all(0),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(mq.height * 0.07),
+              child: Image.asset(
+                'Images/send.webp',
+                fit: BoxFit.cover,
+                height: mq.height * 0.07,
+                width: mq.height * 0.07,
+              ),
+            )),
+      ],
     );
   }
 }
