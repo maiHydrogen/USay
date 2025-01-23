@@ -23,7 +23,7 @@ class _ChatusercardState extends State<Chatusercard> {
   Widget build(BuildContext context) {
     return Card(
         elevation: 1,
-        color: Colors.transparent,
+        color: Colors.white60,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         margin: EdgeInsets.symmetric(
             vertical: 4, horizontal: MediaQuery.of(context).size.width * 0.04),
@@ -63,7 +63,7 @@ class _ChatusercardState extends State<Chatusercard> {
                         imageUrl: widget.user.Image,
                         errorWidget: (context, url, error) => Icon(
                           FontAwesomeIcons.circleUser,
-                          color: Colors.cyanAccent,
+                          color: Colors.cyan,
                           size: MediaQuery.of(context).size.width * 0.1,
                         ),
                       ),
@@ -71,7 +71,7 @@ class _ChatusercardState extends State<Chatusercard> {
                   ),
                   title: Text(
                     widget.user.Name,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.black),
                   ),
                   subtitle: Text(
                     _message != null
@@ -80,7 +80,7 @@ class _ChatusercardState extends State<Chatusercard> {
                             : _message!.msg
                         : widget.user.About,
                     maxLines: 1,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.black54),
                   ),
                   trailing: _message == null
                       ? null //show nothing when no message is sent

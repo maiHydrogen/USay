@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:usay/Components/date&time.dart';
@@ -34,8 +35,7 @@ class ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     var mq = MediaQuery.of(context).size;
-    return SafeArea(
-        child: Container(
+    return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('Images/SplashBC.jpg'),
@@ -50,26 +50,33 @@ class ChatScreenState extends State<ChatScreen> {
             backgroundColor: Colors.transparent,
             automaticallyImplyLeading: false,
             flexibleSpace: Container(
+                padding: EdgeInsets.only(top: mq.height * 0.04),
                 decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blueGrey,
+                      blurRadius: 8,
+                      offset: Offset(0, 8),
+                    ),
+                  ],
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: <Color>[
                       Color.fromARGB(255, 31, 148, 160),
-                      Color.fromARGB(255, 35, 109, 193),
-                      Color.fromARGB(255, 140, 39, 198),
+                      Color.fromARGB(255, 28, 108, 198),
+                      Color.fromARGB(255, 175, 68, 239),
                     ], // Gradient from https://learnui.design/tools/gradient-generator.html
                   ),
                 ),
                 child: _userBar()),
-            toolbarHeight: mq.height * 0.07,
-            elevation: 10,
+            toolbarHeight: mq.height * 0.05,
           ),
           body: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(
-                  height: mq.height * 0.75,
+                  height: mq.height * 0.8,
                   child: StreamBuilder(
                     stream: APIs.getAllMessages(widget.user),
                     builder: (context, snapshot) {
@@ -131,7 +138,7 @@ class ChatScreenState extends State<ChatScreen> {
           ),
         ),
       ),
-    ));
+    );
   }
 
   Widget _userBar() {
@@ -163,16 +170,16 @@ class ChatScreenState extends State<ChatScreen> {
                 },
                 icon: const Icon(
                   CupertinoIcons.back,
-                  color: Colors.cyanAccent,
-                  size: 20,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
               ClipRRect(
-                borderRadius: BorderRadius.circular(mq.width * 0.1),
+                borderRadius: BorderRadius.circular(25),
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
-                  width: mq.width * 0.1,
-                  height: mq.width * 0.1,
+                  width: 50,
+                  height: 50,
                   imageUrl: list.isNotEmpty ? list[0].Image : widget.user.Image,
                   errorWidget: (context, url, error) => Icon(
                     FontAwesomeIcons.circleUser,
@@ -182,10 +189,10 @@ class ChatScreenState extends State<ChatScreen> {
                 ),
               ),
               SizedBox(
-                width: mq.width * 0.03,
+                width: 10,
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -194,7 +201,7 @@ class ChatScreenState extends State<ChatScreen> {
                       fontFamily: 'Solitreo',
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
-                      color: Colors.cyanAccent,
+                      color: Colors.white,
                     ),
                   ),
                   Text(
@@ -207,24 +214,22 @@ class ChatScreenState extends State<ChatScreen> {
                         : MyDateTime.getLastActiveTime(
                             context: context,
                             lastActive: widget.user.lastActive),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Solitreo',
-                      fontSize: mq.width * 0.025,
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: Colors.cyanAccent,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                width: mq.width * 0.3,
-              ),
+              Expanded(child: SizedBox()),
               IconButton(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   CupertinoIcons.phone,
-                  color: Colors.cyanAccent,
-                  size: mq.width * 0.07,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
             ],
