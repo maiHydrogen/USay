@@ -245,23 +245,41 @@ class SignInState extends State<SignIn> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                      onPressed: () => _googleButton(),
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        //const RoundedRectangleBorder(
-                        //borderRadius: BorderRadius.all(Radius.circular(10))),
-                        elevation: 10,
-                        padding: EdgeInsets.all(mq.width * 0.035),
-                        fixedSize: Size(
-                          mq.width * 0.25,
-                          mq.width * 0.25,
-                        ),
-                      ),
-                      child: Image.asset(
-                        'Images/google-logo.png',
-                        fit: BoxFit.cover,
-                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () => _googleButton(),
+                          style: ElevatedButton.styleFrom(
+                            shape: const CircleBorder(),
+                            elevation: 10,
+                            padding: EdgeInsets.all(mq.width * 0.035),
+                            fixedSize: Size(
+                              mq.width * 0.25,
+                              mq.width * 0.25,
+                            ),
+                          ),
+                          child: Image.asset(
+                            'Images/google-logo.png',
+                            fit: BoxFit.cover,
+                          )),
+                      ElevatedButton(
+                          onPressed: (){},
+                          style: ElevatedButton.styleFrom(
+                            shape: const CircleBorder(),
+                            elevation: 10,
+                            padding: EdgeInsets.all(mq.width * 0.035),
+                            fixedSize: Size(
+                              mq.width * 0.25,
+                              mq.width * 0.25,
+                            ),
+                          ),
+                          child: Image.asset(
+                            'Images/Apple_logo_black.png',
+                            fit: BoxFit.cover,
+                          )),
+                    ],
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
