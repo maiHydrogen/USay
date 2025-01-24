@@ -43,9 +43,9 @@ class MyChatsState extends State<MyChats> {
                 SliverAppBar(
                   centerTitle: true,
                   title: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       backgroundBlendMode: BlendMode.src,
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment(0.8, 1),
                         colors: <Color>[
@@ -55,93 +55,106 @@ class MyChatsState extends State<MyChats> {
                         ], // Gradient from https://learnui.design/tools/gradient-generator.html
                         tileMode: TileMode.mirror,
                       ),
-                      border: Border.all(color: Colors.black),
-                      borderRadius: const BorderRadius.all(
+                      borderRadius: BorderRadius.all(
                         Radius.circular(50),
                       ),
                     ),
                     width: MediaQuery.of(context).size.width * 0.95,
                     height: 50,
-                    child: Row(
-                      children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            _isSearching
-                                ? CupertinoIcons.clear_circled
-                                : FontAwesomeIcons.magnifyingGlass,
-                            color: Colors.white,
-                            size: 20,
+                    child: Card(
+                      color: Colors.white60,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 4),
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: 10,
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _isSearching = !_isSearching;
-                            });
-                          },
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _isSearching = true;
-                            });
-                          },
-                          child: SizedBox.fromSize(
-                            size: Size.fromWidth(
-                                MediaQuery.of(context).size.width * 0.695),
-                            child: _isSearching
-                                ? TextField(
-                                    decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Name or Email',
-                                        hintStyle: TextStyle(
-                                          color: Colors.white,
+                          IconButton(
+                            icon: Icon(
+                              _isSearching
+                                  ? CupertinoIcons.clear_circled
+                                  : FontAwesomeIcons.magnifyingGlass,
+                              color: Colors.black54,
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isSearching = !_isSearching;
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isSearching = true;
+                              });
+                            },
+                            child: SizedBox.fromSize(
+                              size: Size.fromWidth(
+                                  MediaQuery.of(context).size.width * 0.695),
+                              child: _isSearching
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                        top:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                      ),
+                                      child: TextField(
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: 'Name or Email',
+                                            hintStyle: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 18,
+                                              fontFamily: 'kalam',
+                                            )),
+                                        autofocus: true,
+                                        style: const TextStyle(
+                                          color: Colors.black87,
                                           fontSize: 16,
                                           fontFamily: 'kalam',
-                                        )),
-                                    autofocus: true,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontFamily: 'kalam',
-                                    ),
-                                    onChanged: (val) {
-                                      _searchList.clear();
-                                      for (var i in _list) {
-                                        if (i.Name.toLowerCase()
-                                                .contains(val.toLowerCase()) ||
-                                            i.email
-                                                .toLowerCase()
-                                                .contains(val.toLowerCase())) {
-                                          _searchList.add(i);
-                                          setState(() {
-                                            _searchList;
-                                          });
-                                        }
-                                      }
-                                    },
-                                  )
-                                : Padding(
-                                    padding: EdgeInsets.only(
-                                      top: MediaQuery.of(context).size.height *
-                                          0.017,
-                                    ),
-                                    child: const Text(
-                                      "Search",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontFamily: 'kalam',
+                                        ),
+                                        onChanged: (val) {
+                                          _searchList.clear();
+                                          for (var i in _list) {
+                                            if (i.Name.toLowerCase().contains(
+                                                    val.toLowerCase()) ||
+                                                i.email.toLowerCase().contains(
+                                                    val.toLowerCase())) {
+                                              _searchList.add(i);
+                                              setState(() {
+                                                _searchList;
+                                              });
+                                            }
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: EdgeInsets.only(
+                                        top:
+                                            MediaQuery.of(context).size.height *
+                                                0.01,
+                                      ),
+                                      child: const Text(
+                                        "Search",
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 18,
+                                          fontFamily: 'kalam',
+                                        ),
                                       ),
                                     ),
-                                  ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   backgroundColor: Colors.transparent,
