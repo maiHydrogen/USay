@@ -100,10 +100,16 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
                 padding: const EdgeInsets.only(right:15.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                        color: Colors.white, style: BorderStyle.solid),
-                  ),
+                    gradient: const LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      colors: <Color>[
+                        Color.fromARGB(255, 31, 148, 160),
+                        Color.fromARGB(255, 28, 108, 198),
+                        Color.fromARGB(255, 175, 68, 239),
+                      ], // Gradient from https://learnui.design/tools/gradient-generator.html
+                    ),
+                    borderRadius: BorderRadius.circular(100),),
                   child: IconButton(
                     onPressed: () => _key.currentState?.openEndDrawer(),
                     icon: const Icon(
