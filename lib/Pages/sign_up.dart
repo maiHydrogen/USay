@@ -16,11 +16,9 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final FirebaseAuthService _auth = FirebaseAuthService();
-
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   bool isSigningUp = false;
 
   @override
@@ -33,17 +31,17 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mq = MediaQuery.of(context).size;
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment(0.8, 1),
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
           colors: <Color>[
-            Color(0x00000000),
-            Color.fromARGB(255, 21, 135, 152),
-            Color(0x001D1639),
+            Color.fromARGB(255, 31, 148, 160),
+            Color.fromARGB(255, 28, 108, 198),
+            Color.fromARGB(255, 175, 68, 239),
           ], // Gradient from https://learnui.design/tools/gradient-generator.html
-          tileMode: TileMode.clamp,
         ),
       ),
       child: Scaffold(
@@ -95,15 +93,19 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(
                   height: 30,
                 ),
-                NeumorphicButton(
+                ElevatedButton(
                   onPressed: () async {
                     _signUp();
                   },
-                  style: const NeumorphicStyle(
-                      depth: 2,
-                      color: Colors.white,
-                      lightSource: LightSource.bottomRight,
-                      shadowLightColor: Colors.cyanAccent),
+                  style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(60))),
+                    elevation: 10,
+                    fixedSize: Size(
+                      mq.width * 0.3,
+                      mq.width * 0.15,
+                    ),
+                  ),
                   child: Center(
                     child: isSigningUp
                         ? const CircularProgressIndicator(
@@ -147,7 +149,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         "Sign In",
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.blue,
+                          color: Colors.deepPurpleAccent,
                           fontFamily: 'kalam',
                         ),
                       ),

@@ -23,7 +23,7 @@ class _ChatusercardState extends State<Chatusercard> {
   Widget build(BuildContext context) {
     return Card(
         elevation: 1,
-        color: Colors.white60,
+        color: Colors.white70,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         margin: EdgeInsets.symmetric(
             vertical: 4, horizontal: MediaQuery.of(context).size.width * 0.04),

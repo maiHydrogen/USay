@@ -14,35 +14,47 @@ class MyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.horizontal(
-              left: Radius.circular(10),
-              right: Radius.circular(10),
+    return Container(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        gradient: LinearGradient(
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
+          colors: <Color>[
+            Color.fromARGB(255, 31, 148, 160),
+            Color.fromARGB(255, 28, 108, 198),
+            Color.fromARGB(255, 175, 68, 239),
+          ], // Gradient from https://learnui.design/tools/gradient-generator.html
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+        child: TextField(
+          controller: controller,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.all(
+                Radius.circular(16),
+              ),
             ),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.cyan),
-            borderRadius: BorderRadius.horizontal(
-              left: Radius.circular(10),
-              right: Radius.circular(10),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.all(
+                Radius.circular(16),
+              ),
             ),
+            fillColor: Colors.white,
+            filled: true,
+            hintText: hintText,
+            hintStyle: TextStyle(
+                color: Colors.grey[700],
+                fontFamily: 'instrument_serif',
+                wordSpacing: 5,
+                fontWeight: FontWeight.w600,
+                fontSize: 16),
           ),
-          fillColor: Colors.white,
-          filled: true,
-          hintText: hintText,
-          hintStyle: TextStyle(
-              color: Colors.grey[700],
-              fontFamily: 'instrument_serif',
-              wordSpacing: 5,
-              fontWeight: FontWeight.w600,
-              fontSize: 16),
         ),
       ),
     );

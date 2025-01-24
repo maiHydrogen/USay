@@ -4,11 +4,10 @@ import 'dart:io';
 import 'package:usay/Components/dialogs.dart';
 import 'package:usay/Pages/homepage.dart';
 import 'package:usay/Pages/sign_up.dart';
-import 'package:usay/Components/square_tiles.dart';
 import 'package:usay/Pages/welcome.dart';
 import 'package:usay/api/api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +33,6 @@ class SignInState extends State<SignIn> {
     _passwordController.dispose();
     super.dispose();
   }
-
 
   // Google SignIn
   _googleButton() {
@@ -69,6 +67,7 @@ class SignInState extends State<SignIn> {
       },
     );
   }
+
   Future<UserCredential?> _signInWithGoogle() async {
     try {
       await InternetAddress.lookup('google.com');
@@ -96,17 +95,17 @@ class SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    final mq = MediaQuery.of(context).size;
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment(0.8, 1),
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
           colors: <Color>[
-            Color(0x00000000),
-            Color.fromARGB(255, 21, 135, 152),
-            Color(0x001D1639),
+            Color.fromARGB(255, 31, 148, 160),
+            Color.fromARGB(255, 28, 108, 198),
+            Color.fromARGB(255, 175, 68, 239),
           ], // Gradient from https://learnui.design/tools/gradient-generator.html
-          tileMode: TileMode.clamp,
         ),
       ),
       child: Scaffold(
@@ -147,7 +146,7 @@ class SignInState extends State<SignIn> {
                     height: 20,
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width*0.9,
+                    width: mq.width * 0.9,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -173,7 +172,7 @@ class SignInState extends State<SignIn> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: () => (){},
+                          onPressed: () => () {},
                           child: const Text(
                             'Forgot Password?',
                             style: TextStyle(
@@ -185,19 +184,23 @@ class SignInState extends State<SignIn> {
                       ],
                     ),
                   ),
-                  NeumorphicButton(
-                    onPressed: ()async{
+                  ElevatedButton(
+                    onPressed: () async {
                       _signIn();
-                    var sharedPref = await SharedPreferences.getInstance();
+                      var sharedPref = await SharedPreferences.getInstance();
                       sharedPref.setBool(WelcomepageState.keylogin, true);
                       var pref = await SharedPreferences.getInstance();
                       //await APIs.updateActiveStatus(true);
                     },
-                    style: const NeumorphicStyle(
-                        depth: 2,
-                        color: Colors.white,
-                        lightSource: LightSource.bottomRight,
-                        shadowLightColor: Colors.cyanAccent),
+                    style: ElevatedButton.styleFrom(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(60))),
+                      elevation: 10,
+                      fixedSize: Size(
+                        mq.width * 0.25,
+                        mq.width * 0.12,
+                      ),
+                    ),
                     child: const Text(
                       'SIGN IN',
                       style: TextStyle(
@@ -242,15 +245,23 @@ class SignInState extends State<SignIn> {
                   const SizedBox(
                     height: 20,
                   ),
-                  NeumorphicButton(
-                    onPressed: () => _googleButton(),
-                    style: const NeumorphicStyle(
-                        depth: 2,
-                        lightSource: LightSource.bottomRight,
-                        shadowLightColor: Colors.cyanAccent),
-                    child:
-                        const SquareTile1(imagePath: 'Images/google-logo.png'),
-                  ),
+                  ElevatedButton(
+                      onPressed: () => _googleButton(),
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        //const RoundedRectangleBorder(
+                        //borderRadius: BorderRadius.all(Radius.circular(10))),
+                        elevation: 10,
+                        padding: EdgeInsets.all(mq.width * 0.035),
+                        fixedSize: Size(
+                          mq.width * 0.25,
+                          mq.width * 0.25,
+                        ),
+                      ),
+                      child: Image.asset(
+                        'Images/google-logo.png',
+                        fit: BoxFit.cover,
+                      )),
                   const SizedBox(
                     height: 20,
                   ),
@@ -268,14 +279,15 @@ class SignInState extends State<SignIn> {
                         width: 10,
                       ),
                       TextButton(
-                        onPressed: () =>  Navigator.pushReplacement(
+                        onPressed: () => Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => const SignUpPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpPage()),
                         ),
                         child: const Text(
                           'Register Now ',
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.deepPurple,
                             fontFamily: 'kalam',
                           ),
                         ),
@@ -290,6 +302,7 @@ class SignInState extends State<SignIn> {
       ),
     );
   }
+
   void _signIn() async {
     setState(() {
       _isSigning = true;
@@ -311,8 +324,7 @@ class SignInState extends State<SignIn> {
         MaterialPageRoute(builder: (context) => const MyHome()),
       );
     } else {
-      Dialogs.showSnackBar(context,"some error occured");
+      Dialogs.showSnackBar(context, "some error occured");
     }
   }
-
 }
