@@ -52,8 +52,24 @@ class ProfileDialog extends StatelessWidget {
               //user profile picture
               Positioned(
                 top: mq.height * .075,
-                left: mq.width * .1,
-                child: ProfileImage(size: mq.width * .5, url: user.Image),
+                left: mq.width * .085,
+                child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomRight,
+                        end: Alignment.topLeft,
+                        colors: <Color>[
+                          Color.fromARGB(255, 31, 148, 160),
+                          Color.fromARGB(255, 28, 108, 198),
+                          Color.fromARGB(255, 175, 68, 239),
+                        ], // Gradient from https://learnui.design/tools/gradient-generator.html
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: ProfileImage(size: mq.width * .5, url: user.Image),
+                    )),
               ),
 
               //user name
@@ -102,7 +118,6 @@ class ChatProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context).size;
     return AlertDialog(
-
       contentPadding: EdgeInsets.zero,
       backgroundColor: Colors.white.withOpacity(0.9),
       shape: const RoundedRectangleBorder(
@@ -144,17 +159,34 @@ class ChatProfile extends StatelessWidget {
                 SizedBox(
                   height: mq.height * 0.02,
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(mq.width * 0.3),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    width: mq.width * 0.6,
-                    height: mq.width * 0.6,
-                    imageUrl: user.Image,
-                    errorWidget: (context, url, error) => Icon(
-                      FontAwesomeIcons.circleUser,
-                      color: Colors.cyanAccent,
-                      size: mq.width * 0.5,
+                Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomRight,
+                      end: Alignment.topLeft,
+                      colors: <Color>[
+                        Color.fromARGB(255, 31, 148, 160),
+                        Color.fromARGB(255, 28, 108, 198),
+                        Color.fromARGB(255, 175, 68, 239),
+                      ], // Gradient from https://learnui.design/tools/gradient-generator.html
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(mq.width * 0.3),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        width: mq.width * 0.6,
+                        height: mq.width * 0.6,
+                        imageUrl: user.Image,
+                        errorWidget: (context, url, error) => Icon(
+                          FontAwesomeIcons.circleUser,
+                          color: Colors.cyanAccent,
+                          size: mq.width * 0.5,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -197,6 +229,7 @@ class ChatProfile extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.purple,
                         shape: const CircleBorder(),
                         elevation: 10,
                         padding: EdgeInsets.all(mq.width * 0.035),
@@ -220,6 +253,7 @@ class ChatProfile extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.blue,
                         shape: const CircleBorder(),
                         elevation: 10,
                         padding: EdgeInsets.all(mq.width * 0.035),
@@ -273,8 +307,7 @@ class ChatProfile extends StatelessWidget {
                       ? list[0].isOnline
                           ? 'Online'
                           : MyDateTime.getLastActiveTime(
-                              context: context,
-                              lastActive: list[0].lastActive)
+                              context: context, lastActive: list[0].lastActive)
                       : MyDateTime.getLastActiveTime(
                           context: context, lastActive: user.lastActive),
                   style: TextStyle(
