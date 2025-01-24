@@ -64,38 +64,56 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       Stack(
                         children: [
-                          profileImage != null
-                              ? //show local image
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                      MediaQuery.of(context).size.width * 0.3),
-                                  child: Image.file(
-                                    File(profileImage!),
-                                    fit: BoxFit.cover,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.6,
-                                    height:
-                                        MediaQuery.of(context).size.width * 0.6,
-                                  ))
-                              : // show server image
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                      MediaQuery.of(context).size.width * 0.3),
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.6,
-                                    height:
-                                        MediaQuery.of(context).size.width * 0.6,
-                                    imageUrl: widget.user.Image,
-                                    errorWidget: (context, url, error) => Icon(
-                                      FontAwesomeIcons.circleUser,
-                                      color: Colors.cyanAccent,
-                                      size: MediaQuery.of(context).size.width *
-                                          0.5,
+                          Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(1.0),
+                              child: profileImage != null
+                                  ? //show local image
+                                  ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          MediaQuery.of(context).size.width *
+                                              0.3),
+                                      child: Image.file(
+                                        File(profileImage!),
+                                        fit: BoxFit.cover,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                      ))
+                                  : // show server image
+                                  ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          MediaQuery.of(context).size.width *
+                                              0.3),
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                        imageUrl: widget.user.Image,
+                                        errorWidget: (context, url, error) =>
+                                            Icon(
+                                          FontAwesomeIcons.circleUser,
+                                          color: Colors.cyanAccent,
+                                          size: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
+                            ),
+                          ),
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -108,7 +126,7 @@ class _MyProfileState extends State<MyProfile> {
                               color: Colors.white,
                               child: const Icon(
                                 FontAwesomeIcons.pencil,
-                                color: Colors.cyan,
+                                color: Colors.blueAccent,
                               ),
                             ),
                           ),
@@ -130,6 +148,9 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         initialValue: widget.user.Name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
                         onSaved: (val) => APIs.me.Name = val ?? '',
                         validator: (val) => val != null && val.isNotEmpty
                             ? null
@@ -137,12 +158,13 @@ class _MyProfileState extends State<MyProfile> {
                         decoration: InputDecoration(
                             prefixIcon: const Icon(
                               FontAwesomeIcons.solidCircleUser,
-                              color: Colors.cyan,
+                              color: Colors.white,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            label: const Text("Name"),
+                            label: const Text("Name",
+                                style: TextStyle(color: Colors.white)),
                             hintText: 'Lewis Hamilton'),
                       ),
                       SizedBox(
@@ -150,6 +172,9 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         initialValue: widget.user.About,
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
                         onSaved: (val) => APIs.me.About = val ?? '',
                         validator: (val) => val != null && val.isNotEmpty
                             ? null
@@ -157,12 +182,15 @@ class _MyProfileState extends State<MyProfile> {
                         decoration: InputDecoration(
                             prefixIcon: const Icon(
                               FontAwesomeIcons.circleInfo,
-                              color: Colors.cyan,
+                              color: Colors.white,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            label: const Text("About"),
+                            label: const Text(
+                              "About",
+                              style: TextStyle(color: Colors.white),
+                            ),
                             hintText: '7 times F1 World Champion'),
                       ),
                       SizedBox(
@@ -262,7 +290,7 @@ class _MyProfileState extends State<MyProfile> {
                     onPressed: () async {
                       final ImagePicker picker = ImagePicker();
                       final XFile? image =
-                      await picker.pickImage(source: ImageSource.camera);
+                          await picker.pickImage(source: ImageSource.camera);
                       if (image != null) {
                         log('ImagePath: ${image.path}');
                         setState(() {

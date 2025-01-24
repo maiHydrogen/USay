@@ -62,7 +62,7 @@ class MyChatsState extends State<MyChats> {
                     width: MediaQuery.of(context).size.width * 0.95,
                     height: 50,
                     child: Card(
-                      color: Colors.white60,
+                      color: Colors.white70,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       margin: const EdgeInsets.symmetric(
