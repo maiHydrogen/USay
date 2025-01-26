@@ -188,7 +188,7 @@ class ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Column(
@@ -223,7 +223,7 @@ class ChatScreenState extends State<ChatScreen> {
                   ),
                 ],
               ),
-              Expanded(child: SizedBox()),
+              const Expanded(child: SizedBox()),
               IconButton(
                 onPressed: () {},
                 icon: const Icon(

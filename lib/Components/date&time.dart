@@ -1,4 +1,4 @@
-//import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class MyDateTime {
@@ -27,28 +27,9 @@ class MyDateTime {
         : '${sent.day} ${_getMonth(sent)}';
   }
 
-  // // for getting formatted time for sent & read
-  // static String getMessageTime(
-  //     {required BuildContext context, required String time}) {
-
-  //   final DateTime sent = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
-  //   final DateTime now = DateTime.now();
-
-  //   final formattedTime = TimeOfDay.fromDateTime(sent).format(context);
-  //   if (now.day == sent.day &&
-  //       now.month == sent.month &&
-  //       now.year == sent.year) {
-  //     return formattedTime;
-  //   }
-
-  //   return now.year == sent.year
-  //       ? '$formattedTime - ${sent.day} ${_getMonth(sent)}'
-  //       : '$formattedTime - ${sent.day} ${_getMonth(sent)} ${sent.year}';
-  // }
-
   // for getting formatted time for sent & read
   // [Bux Fix] Avoid bug due to context not mounted when keyboard is open in chat & bottom sheet opens
-  /*static String getMessageTime({required String time}) {
+  static String getMessageTime({required String time}) {
     final DateTime sent = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
     final DateTime now = DateTime.now();
 
@@ -65,7 +46,7 @@ class MyDateTime {
         : '${sent.day} ${_getMonth(sent)} ${sent.year}';
 
     return '$formattedTime - $formattedDate';
-  }*/
+  }
 
 
   //get formatted last active time of user in chat screen
