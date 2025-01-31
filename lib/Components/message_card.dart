@@ -1,9 +1,7 @@
-import 'dart:developer';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:usay/Components/date&time.dart';
 import 'package:usay/Components/dialogs.dart';
 import 'package:usay/api/api.dart';
@@ -113,7 +111,7 @@ class _MessageCardState extends State<MessageCard> {
   }
 
   //showing the bottomsheet
-  void _showBottomSheet(isMe) {
+  void _showBottomSheet(bool isMe) {
     final mq = MediaQuery.of(context).size;
     showModalBottomSheet(
         context: context,
@@ -137,7 +135,7 @@ class _MessageCardState extends State<MessageCard> {
                   ?
                   //copy option
                   _OptionItem(
-                      icon: const Icon(Icons.copy_all_rounded,
+                      icon: const Icon(CupertinoIcons.doc_on_clipboard,
                           color: Colors.blue, size: 26),
                       name: 'Copy Text',
                       onTap: (ctx) async {
@@ -155,28 +153,10 @@ class _MessageCardState extends State<MessageCard> {
                   :
                   //save option
                   _OptionItem(
-                      icon: const Icon(Icons.download_rounded,
+                      icon: const Icon(CupertinoIcons.arrow_down_to_line_alt,
                           color: Colors.blue, size: 26),
                       name: 'Save Image',
-                      onTap: (ctx) async {
-                        try {
-                      log('Image Url: ${widget.message.msg}');
-                      await GallerySaver.saveImage(widget.message.msg,
-                          albumName: 'We Chat')
-                          .then((success) {
-                        if (ctx.mounted) {
-                          //for hiding bottom sheet
-                          Navigator.pop(ctx);
-                          if (success != null && success) {
-                            Dialogs.showSnackBar(
-                                ctx, 'Image Successfully Saved!');
-                          }
-                        }
-                      });
-                    } catch (e) {
-                      log('ErrorWhileSavingImg: $e');
-                    }
-                      }),
+                      onTap: (ctx) async {}),
 
               //separator or divider
               if (isMe)
@@ -189,7 +169,7 @@ class _MessageCardState extends State<MessageCard> {
               //edit option
               if (widget.message.type == Type.text && isMe)
                 _OptionItem(
-                    icon: const Icon(Icons.edit, color: Colors.blue, size: 26),
+                    icon: const Icon(CupertinoIcons.pencil, color: Colors.blue, size: 26),
                     name: 'Edit Message',
                     onTap: (ctx) {
                       if (ctx.mounted) {
@@ -203,7 +183,7 @@ class _MessageCardState extends State<MessageCard> {
               //delete option
               if (isMe)
                 _OptionItem(
-                    icon: const Icon(Icons.delete_forever,
+                    icon: const Icon(CupertinoIcons.trash,
                         color: Colors.red, size: 26),
                     name: 'Delete Message',
                     onTap: (ctx) async {
@@ -224,14 +204,14 @@ class _MessageCardState extends State<MessageCard> {
 
               //sent time
               _OptionItem(
-                  icon: const Icon(Icons.remove_red_eye, color: Colors.blue),
+                  icon: const Icon(CupertinoIcons.eye_fill, color: Colors.blue),
                   name:
                       'Sent At: ${MyDateTime.getMessageTime(time: widget.message.sent)}',
                   onTap: (_) {}),
 
               //read time
               _OptionItem(
-                  icon: const Icon(Icons.remove_red_eye, color: Colors.green),
+                  icon: const Icon(CupertinoIcons.eye_fill, color: Colors.green),
                   name: widget.message.read.isEmpty
                       ? 'Read At: Not seen yet'
                       : 'Read At: ${MyDateTime.getMessageTime(time: widget.message.read)}',
@@ -257,7 +237,7 @@ class _MessageCardState extends State<MessageCard> {
           title: const Row(
             children: [
               Icon(
-                Icons.message,
+                CupertinoIcons.chat_bubble_text,
                 color: Colors.blue,
                 size: 28,
               ),

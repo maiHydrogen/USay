@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:usay/Pages/calls.dart';
 import 'package:usay/Pages/chats.dart';
@@ -130,10 +131,10 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             useSafeArea: true,
             labels: const ["Chats", "New Chat", "Calls", "Settings"],
             icons: const [
-              FontAwesomeIcons.message,
-              FontAwesomeIcons.penToSquare,
-              FontAwesomeIcons.phone,
-              FontAwesomeIcons.gear
+              CupertinoIcons.chat_bubble_2_fill,
+              CupertinoIcons.add_circled,
+              CupertinoIcons.phone,
+              CupertinoIcons.gear,
             ],
             textStyle: const TextStyle(
               color: Color.fromARGB(255, 134, 28, 194),
@@ -141,8 +142,8 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             tabSize: 40,
             tabBarHeight: 50,
             tabIconColor: Color.fromARGB(255, 134, 28, 194),
-            tabIconSize: 30,
-            tabIconSelectedSize: 25.0,
+            tabIconSize: 40,
+            tabIconSelectedSize: 28,
             tabSelectedColor:const Color.fromARGB(255, 134, 28, 194),
             tabIconSelectedColor: Colors.white,
             tabBarColor:Colors.white54,

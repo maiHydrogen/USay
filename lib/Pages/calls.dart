@@ -21,16 +21,15 @@ class __MyCallsState extends State<MyCalls> {
         child: Container(
           decoration: const BoxDecoration(
             backgroundBlendMode: BlendMode.src,
-           gradient:  LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment(0.8, 1),
-          colors: <Color>[
-             Color(0x00000000),
-             Color.fromARGB(255, 21, 135, 152),
-             Color(0x001D1639),
-          ], // Gradient from https://learnui.design/tools/gradient-generator.html
-          tileMode: TileMode.clamp,
-        ),
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              colors: <Color>[
+                Color.fromARGB(255, 31, 148, 160),
+                Color.fromARGB(255, 28, 108, 198),
+                Color.fromARGB(255, 175, 68, 239),
+              ], // Gradient from https://learnui.design/tools/gradient-generator.html
+            ),
             borderRadius: BorderRadius.all(
               Radius.circular(20),
             ),

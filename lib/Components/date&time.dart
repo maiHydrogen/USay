@@ -34,7 +34,6 @@ class MyDateTime {
     final DateTime now = DateTime.now();
 
     final String formattedTime = DateFormat('h:mm a').format(sent);
-
     if (now.day == sent.day &&
         now.month == sent.month &&
         now.year == sent.year) {
@@ -44,10 +43,8 @@ class MyDateTime {
     final String formattedDate = now.year == sent.year
         ? '${sent.day} ${_getMonth(sent)}'
         : '${sent.day} ${_getMonth(sent)} ${sent.year}';
-
     return '$formattedTime - $formattedDate';
   }
-
 
   //get formatted last active time of user in chat screen
   static String getLastActiveTime(

@@ -45,36 +45,11 @@ class WelcomepageState extends State<Welcomepage> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*0.6 ,),
                 const Text(
-                  'A proud',
+                  'We\'re listening!',
                   style: TextStyle(
                       fontFamily: 'Solitreo',
-                      fontSize: 16,
+                      fontSize: 26,
                       color: Colors.white),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'MAKE IN INDIA',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 24,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'Product',
-                  style: TextStyle(
-                      fontFamily: 'Solitreo',
-                      fontSize: 16,
-                      color: Colors.white),
-                ),
-                const SizedBox(
-                  height: 80,
                 ),
               ],
             ),
