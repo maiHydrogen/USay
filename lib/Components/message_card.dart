@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -156,7 +157,22 @@ class _MessageCardState extends State<MessageCard> {
                       icon: const Icon(CupertinoIcons.arrow_down_to_line_alt,
                           color: Colors.blue, size: 26),
                       name: 'Save Image',
-                      onTap: (ctx) async {}),
+                      onTap: (ctx) async {
+                        try{
+                          log('Image url :${widget.message.msg}');
+                          //await GallerySaver.saveImage(widget.message.msg,
+                            //  albumName: 'Usay').then((success) {
+                            Navigator.pop(context);
+                            //if (success != null && success) {
+                              //Dialogs.showSnackBar(
+                                //  context, 'Image Saved Successfully');
+                            //}
+                          //}
+                         // );
+                        }catch(e){
+                          log('error occurred :$e');
+                        }
+                      }),
 
               //separator or divider
               if (isMe)
@@ -173,10 +189,9 @@ class _MessageCardState extends State<MessageCard> {
                     name: 'Edit Message',
                     onTap: (ctx) {
                       if (ctx.mounted) {
-                        _showMessageUpdateDialog(ctx);
-
                         //for hiding bottom sheet
                         Navigator.pop(ctx);
+                        _showMessageUpdateDialog(ctx);
                       }
                     }),
 
@@ -187,12 +202,12 @@ class _MessageCardState extends State<MessageCard> {
                         color: Colors.red, size: 26),
                     name: 'Delete Message',
                     onTap: (ctx) async {
-                      //await APIs.deleteMessage(widget.message).then(
-                        //(value) {
+                      await APIs.deleteMessage(widget.message).then(
+                        (value) {
                           //for hiding bottom sheet
-                          //if (ctx.mounted) Navigator.pop(ctx);
-                        //},
-                      //);
+                          if (ctx.mounted) Navigator.pop(ctx);
+                        },
+                      );
                     }),
 
               //separator or divider
@@ -255,27 +270,12 @@ class _MessageCardState extends State<MessageCard> {
                     borderRadius: BorderRadius.all(Radius.circular(15)))),
           ),
 
-          //actions
           actions: [
-            //cancel button
-            MaterialButton(
-                onPressed: () {
-                  //hide alert dialog
-                  Navigator.pop(ctx);
-                },
-                child: const Text(
-                  'Cancel',
-                  style: TextStyle(color: Colors.blue, fontSize: 16),
-                )),
-
             //update button
             MaterialButton(
                 onPressed: () {
                   APIs.updateMessage(widget.message, updatedMsg);
                   //hide alert dialog
-                  Navigator.pop(ctx);
-
-                  //for hiding bottom sheet
                   Navigator.pop(ctx);
                 },
                 child: const Text(

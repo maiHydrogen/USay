@@ -55,8 +55,8 @@ class ChatScreenState extends State<ChatScreen> {
                   boxShadow: [
                     BoxShadow(
                       color: Colors.blueGrey,
-                      blurRadius: 8,
-                      offset: Offset(0, 8),
+                      blurRadius: 5,
+                      offset: Offset(0, 5),
                     ),
                   ],
                   gradient: LinearGradient(
@@ -108,7 +108,8 @@ class ChatScreenState extends State<ChatScreen> {
                           } else {
                             return const Center(
                               child: Text('Say Hii! 👋',
-                                  style: TextStyle(fontSize: 20)),
+                                  style: TextStyle(fontSize: 20,
+                                  color: Colors.white)),
                             );
                           }
                       }
@@ -145,6 +146,7 @@ class ChatScreenState extends State<ChatScreen> {
     final mq = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
+        FocusScope.of(context).unfocus();
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -230,6 +232,14 @@ class ChatScreenState extends State<ChatScreen> {
                   CupertinoIcons.phone,
                   color: Colors.white,
                   size: 30,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  CupertinoIcons.videocam,
+                  color: Colors.white,
+                  size: 40,
                 ),
               ),
             ],
@@ -350,7 +360,7 @@ class ChatScreenState extends State<ChatScreen> {
         ElevatedButton(
             onPressed: () {
               if (_textController.text.isNotEmpty) {
-                APIs.sendMessage(widget.user, _textController.text);
+                APIs.sendMessage(widget.user, _textController.text,Type.text);
                 _textController.text = '';
               }
             },

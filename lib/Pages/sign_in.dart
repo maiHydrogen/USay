@@ -4,13 +4,11 @@ import 'dart:io';
 import 'package:usay/Components/dialogs.dart';
 import 'package:usay/Pages/homepage.dart';
 import 'package:usay/Pages/sign_up.dart';
-import 'package:usay/Pages/welcome.dart';
 import 'package:usay/api/api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Components/textfields.dart';
 
 class SignIn extends StatefulWidget {
@@ -187,10 +185,6 @@ class SignInState extends State<SignIn> {
                   ElevatedButton(
                     onPressed: () async {
                       _signIn();
-                      var sharedPref = await SharedPreferences.getInstance();
-                      sharedPref.setBool(WelcomepageState.keylogin, true);
-                      var pref = await SharedPreferences.getInstance();
-                      //await APIs.updateActiveStatus(true);
                     },
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
@@ -337,6 +331,7 @@ class SignInState extends State<SignIn> {
 
     if (user != null) {
       Dialogs.showSnackBar(context, "User is successfully signed in");
+      await APIs.updateActiveStatus(true);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MyHome()),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:usay/Components/chatusercard.dart';
+import 'package:usay/Components/dialogs.dart';
 import 'package:usay/api/api.dart';
 import 'package:usay/models/chatuser.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
@@ -256,8 +257,93 @@ class MyChatsState extends State<MyChats> {
                   ),
                 ),
               ]),
+          floatingActionButton: ElevatedButton(
+            onPressed: () {
+             _addChatUserDialog();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 175, 68, 239),
+              foregroundColor: Colors.white,
+              shape: const CircleBorder(),
+              elevation: 10,
+              padding: const EdgeInsets.all(10),
+            ),
+            child: const Icon(
+              CupertinoIcons.person_add,
+              size: 40,
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  // for adding new chat user
+  void _addChatUserDialog() {
+    String email = '';
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          contentPadding: const EdgeInsets.only(
+              left: 24, right: 24, top: 20, bottom: 10),
+
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+
+          //title
+          title: const Row(
+            children: [
+              Icon(
+                CupertinoIcons.person_add,
+                color: Color.fromARGB(255, 31, 148, 160),
+                size: 28,
+              ),
+              SizedBox(width: 10,),
+              Text('Add User')
+            ],
+          ),
+
+          //content
+          content: TextFormField(
+            maxLines: null,
+            onChanged: (value) => email = value,
+            decoration: const InputDecoration(
+                hintText: 'Email Id',
+                prefixIcon: Icon(CupertinoIcons.mail, color: Color.fromARGB(255, 31, 148, 160),),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)))),
+          ),
+
+          //actions
+          actions: [
+            //cancel button
+            MaterialButton(
+                onPressed: () {
+                  //hide alert dialog
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel',
+                    style: TextStyle(color: Color.fromARGB(255, 31, 148, 160), fontSize: 16))),
+
+            //add button
+            MaterialButton(
+                onPressed: () async {
+                  //hide alert dialog
+                  Navigator.pop(context);
+                  if (email.trim().isNotEmpty) {
+                    await APIs.addChatUser(email).then((value) {
+                      if (!value) {
+                        Dialogs.showSnackBar(
+                            context, 'User does not Exists!');
+                      }
+                    });
+                  }
+                },
+                child: const Text(
+                  'Add',
+                  style: TextStyle(color: Color.fromARGB(255, 31, 148, 160), fontSize: 16),
+                ))
+          ],
+        ));
   }
 }

@@ -1,9 +1,7 @@
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:usay/Pages/calls.dart';
 import 'package:usay/Pages/chats.dart';
-import 'package:usay/Pages/newchats.dart';
 import 'package:usay/Pages/profile.dart';
 import 'package:usay/Pages/settings.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +31,6 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
     //resume -- active or online
     //pause  -- inactive or offline
     SystemChannels.lifecycle.setMessageHandler((message) {
-      log('Message: $message');
       if (APIs.auth.currentUser != null) {
         if (message.toString().contains('resume')) {
           APIs.updateActiveStatus(true);
@@ -47,7 +44,7 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
     });
     _motionTabBarController = MotionTabBarController(
       initialIndex: 0,
-      length: 4,
+      length: 3,
       vsync: this,
     );
   }
@@ -129,10 +126,9 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             controller: _motionTabBarController,
             initialSelectedTab: "Chats",
             useSafeArea: true,
-            labels: const ["Chats", "New Chat", "Calls", "Settings"],
+            labels: const ["Chats", "Calls", "Settings"],
             icons: const [
               CupertinoIcons.chat_bubble_2_fill,
-              CupertinoIcons.add_circled,
               CupertinoIcons.phone,
               CupertinoIcons.gear,
             ],
@@ -141,7 +137,7 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             ),
             tabSize: 40,
             tabBarHeight: 50,
-            tabIconColor: Color.fromARGB(255, 134, 28, 194),
+            tabIconColor: const Color.fromARGB(255, 134, 28, 194),
             tabIconSize: 40,
             tabIconSelectedSize: 28,
             tabSelectedColor:const Color.fromARGB(255, 134, 28, 194),
@@ -159,8 +155,6 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
               controller: _motionTabBarController,
               children: <Widget>[
                 MyChats(title: "Chats", controller: _motionTabBarController!),
-                MyNewChats(
-                    title: "NewChats", controller: _motionTabBarController!),
                 MyCalls(title: "Calls", controller: _motionTabBarController!),
                 MySettings(
                     title: "Settings", controller: _motionTabBarController!),

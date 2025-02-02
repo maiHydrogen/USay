@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:usay/Components/date&time.dart';
 import 'package:usay/Components/dialogs.dart';
 import 'package:usay/Pages/chatscreen.dart';
@@ -62,8 +63,8 @@ class _ChatusercardState extends State<Chatusercard> {
                         height: MediaQuery.of(context).size.width * 0.12,
                         imageUrl: widget.user.Image,
                         errorWidget: (context, url, error) => Icon(
-                          FontAwesomeIcons.circleUser,
-                          color: Colors.cyan,
+                          CupertinoIcons.person_circle,
+                          color: Colors.black,
                           size: MediaQuery.of(context).size.width * 0.1,
                         ),
                       ),
