@@ -20,7 +20,7 @@ class NotificationAccessToken {
 
         // TODO - Paste Your Generated Json File Content - Basically paste the server keys for the cloud messaging
 
-        [fMessagingScope],
+        //[fMessagingScope],
       );
 
       _token = client.credentials.accessToken.data;
