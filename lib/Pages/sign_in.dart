@@ -21,7 +21,6 @@ class SignIn extends StatefulWidget {
 class SignInState extends State<SignIn> {
   bool _isSigning = false;
   final FirebaseAuthService _auth = FirebaseAuthService();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -182,26 +181,30 @@ class SignInState extends State<SignIn> {
                       ],
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      _signIn();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(60))),
-                      elevation: 10,
-                      fixedSize: Size(
-                        mq.width * 0.25,
-                        mq.width * 0.12,
+                  IgnorePointer(
+                    ignoring: _isSigning,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        _signIn();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(60))),
+                        elevation: 10,
+                        fixedSize: Size(
+                          mq.width * 0.25,
+                          mq.width * 0.12,
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      'SIGN IN',
-                      style: TextStyle(
-                          fontFamily: 'instrument_serif',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.black),
+                      child: const Text(
+                        'SIGN IN',
+                        style: TextStyle(
+                            fontFamily: 'instrument_serif',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.black),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -258,7 +261,7 @@ class SignInState extends State<SignIn> {
                             fit: BoxFit.cover,
                           )),
                       ElevatedButton(
-                          onPressed: (){},
+                          onPressed: () {},
                           style: ElevatedButton.styleFrom(
                             shape: const CircleBorder(),
                             elevation: 10,
@@ -319,6 +322,7 @@ class SignInState extends State<SignIn> {
     setState(() {
       _isSigning = true;
     });
+    Dialogs.loading(context);
 
     String email = _emailController.text;
     String password = _passwordController.text;

@@ -236,15 +236,12 @@ class _MyProfileState extends State<MyProfile> {
                         onPressed: () async {
                           Dialogs.showSnackBar(
                               context, 'Signed Out Successfully');
-                          var shacyanPref =
-                              await SharedPreferences.getInstance();
-                          shacyanPref.setBool(WelcomepageState.keylogin, false);
-                          await APIs.updateActiveStatus(false);
                           await APIs.auth.signOut().then(
                             (value) async {
                               await GoogleSignIn().signOut().then((value) {
                                 Navigator.pop(context);
                                 APIs.auth = FirebaseAuth.instance;
+                                APIs.updateActiveStatus(false);
                                 // ignore: use_build_context_synchronously
                                 Navigator.pushReplacement(
                                   context,

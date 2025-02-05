@@ -68,8 +68,6 @@ class _NotificationsState extends State<Notifications> {
                   ),
                   IconButton( icon: const Icon(FontAwesomeIcons.arrowRightFromBracket),
                     onPressed: () async {
-                      var shacyanPref = await SharedPreferences.getInstance();
-                      shacyanPref.setBool(WelcomepageState.keylogin, false);
                       await APIs.auth.signOut();
                       await GoogleSignIn().signOut();
                       // ignore: use_build_context_synchronously

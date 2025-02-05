@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:usay/Pages/calls.dart';
+import 'package:usay/Pages/chatbot.dart';
 import 'package:usay/Pages/chats.dart';
 import 'package:usay/Pages/profile.dart';
 import 'package:usay/Pages/settings.dart';
@@ -44,7 +45,7 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
     });
     _motionTabBarController = MotionTabBarController(
       initialIndex: 0,
-      length: 3,
+      length: 4,
       vsync: this,
     );
   }
@@ -70,10 +71,10 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            toolbarHeight: MediaQuery.of(context).size.height*0.07,
+            toolbarHeight: MediaQuery.of(context).size.height * 0.07,
             title: const Text(
-                'Usay',
-              ),
+              'Usay',
+            ),
             titleTextStyle: const TextStyle(
               fontFamily: 'GreatVibes',
               fontSize: 32,
@@ -95,7 +96,7 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             ),
             actions: [
               Padding(
-                padding: const EdgeInsets.only(right:15.0),
+                padding: const EdgeInsets.only(right: 15.0),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
@@ -107,7 +108,8 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
                         Color.fromARGB(255, 175, 68, 239),
                       ], // Gradient from https://learnui.design/tools/gradient-generator.html
                     ),
-                    borderRadius: BorderRadius.circular(100),),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
                   child: IconButton(
                     onPressed: () => _key.currentState?.openEndDrawer(),
                     icon: const Icon(
@@ -126,9 +128,10 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             controller: _motionTabBarController,
             initialSelectedTab: "Chats",
             useSafeArea: true,
-            labels: const ["Chats", "Calls", "Settings"],
+            labels: const ["Chats", "AI", "Calls", "Settings"],
             icons: const [
               CupertinoIcons.chat_bubble_2_fill,
+              FontAwesomeIcons.microchip,
               CupertinoIcons.phone,
               CupertinoIcons.gear,
             ],
@@ -140,9 +143,9 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
             tabIconColor: const Color.fromARGB(255, 134, 28, 194),
             tabIconSize: 40,
             tabIconSelectedSize: 28,
-            tabSelectedColor:const Color.fromARGB(255, 134, 28, 194),
+            tabSelectedColor: const Color.fromARGB(255, 134, 28, 194),
             tabIconSelectedColor: Colors.white,
-            tabBarColor:Colors.white54,
+            tabBarColor: Colors.white54,
             onTabItemSelected: (int value) {
               setState(() {
                 _motionTabBarController!.index = value;
@@ -155,6 +158,7 @@ class _MyHomeState extends State<MyHome> with TickerProviderStateMixin {
               controller: _motionTabBarController,
               children: <Widget>[
                 MyChats(title: "Chats", controller: _motionTabBarController!),
+                Chatbot(controller: _motionTabBarController!, title: "AI"),
                 MyCalls(title: "Calls", controller: _motionTabBarController!),
                 MySettings(
                     title: "Settings", controller: _motionTabBarController!),

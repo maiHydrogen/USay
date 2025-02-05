@@ -35,3 +35,12 @@ class Message {
   }
 }
 enum Type {text,image}
+// ai message
+class AiMessage {
+  String msg;
+  final MessageType msgType;
+
+  AiMessage({required this.msg, required this.msgType});
+}
+
+enum MessageType { user, bot }
